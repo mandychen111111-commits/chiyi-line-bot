@@ -1,5 +1,5 @@
 import os
-import anthropic
+import google.generativeai as genai
 from flask import Flask, request, abort
 from linebot.v3 import WebhookHandler
 from linebot.v3.exceptions import InvalidSignatureError
@@ -14,19 +14,30 @@ app = Flask(__name__)
 # === 設定區（從環境變數讀取）===
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")
 LINE_CHANNEL_SECRET = os.environ.get("LINE_CHANNEL_SECRET")
-ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+
+print(f"[啟動] LINE Token: {LINE_CHANNEL_ACCESS_TOKEN[:20]}..." if LINE_CHANNEL_ACCESS_TOKEN else "[啟動] LINE Token: 未設定")
+print(f"[啟動] Gemini API Key: {GEMINI_API_KEY[:20]}..." if GEMINI_API_KEY else "[啟動] Gemini API Key: 未設定")
 
 configuration = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
-claude_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+
+# 設定 Gemini API
+genai.configure(api_key=GEMINI_API_KEY)
+gemini_model = genai.GenerativeModel('gemini-pro')
 
 # === 讀取知識庫 ===
 def load_knowledge_base():
     kb_path = os.path.join(os.path.dirname(__file__), "knowledge_base.txt")
-    with open(kb_path, "r", encoding="utf-8") as f:
-        return f.read()
+    try:
+        with open(kb_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        print("[警告] 找不到 knowledge_base.txt")
+        return "（知識庫無法載入）"
 
 KNOWLEDGE_BASE = load_knowledge_base()
+print(f"[啟動] 知識庫已載入，共 {len(KNOWLEDGE_BASE)} 字")
 
 # === System Prompt：定義 Bot 身份與行為 ===
 SYSTEM_PROMPT = f"""你是「奇異生技小幫手」，一個專業、親切的 LINE 客服助理。
@@ -54,6 +65,7 @@ def callback():
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
+        print("[錯誤] LINE 簽名驗證失敗")
         abort(400)
 
     return "OK"
@@ -61,37 +73,47 @@ def callback():
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
     user_message = event.message.text
-    print(f"[收到訊息] {user_message}")
+    user_id = event.source.user_id
+    print(f"[收到訊息] 使用者: {user_id}, 內容: {user_message}")
 
-    # 呼叫 Claude API
+    # 呼叫 Gemini API
+    reply_text = None
     try:
-        print(f"[呼叫 Claude] 開始...")
-        response = claude_client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=500,
-            system=SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": user_message}]
+        print(f"[Gemini] 開始呼叫...")
+        response = gemini_model.generate_content(
+            contents=[
+                {
+                    "role": "user",
+                    "parts": [{"text": user_message}]
+                }
+            ],
+            system_instruction=SYSTEM_PROMPT,
+            generation_config=genai.types.GenerationConfig(
+                max_output_tokens=500,
+                temperature=0.7,
+            )
         )
-        reply_text = response.content[0].text
-        print(f"[Claude 回應] {reply_text}")
+        reply_text = response.text
+        print(f"[Gemini] 成功回應: {reply_text[:100]}...")
     except Exception as e:
-        print(f"[Claude 錯誤] {str(e)}")
+        print(f"[Gemini 錯誤] {type(e).__name__}: {str(e)}")
         reply_text = "抱歉，系統暫時忙碌中，請稍後再試，或直接加入客服 LINE：https://lin.ee/OFTbf29 😊"
 
     # 回覆給用戶
-    try:
-        print(f"[回覆 LINE] 開始...")
-        with ApiClient(configuration) as api_client:
-            line_bot_api = MessagingApi(api_client)
-            line_bot_api.reply_message_with_http_info(
-                ReplyMessageRequest(
-                    reply_token=event.reply_token,
-                    messages=[TextMessage(text=reply_text)]
+    if reply_text:
+        try:
+            print(f"[LINE 回覆] 開始回覆使用者...")
+            with ApiClient(configuration) as api_client:
+                line_bot_api = MessagingApi(api_client)
+                line_bot_api.reply_message_with_http_info(
+                    ReplyMessageRequest(
+                        reply_token=event.reply_token,
+                        messages=[TextMessage(text=reply_text)]
+                    )
                 )
-            )
-        print(f"[回覆 LINE] 成功")
-    except Exception as e:
-        print(f"[回覆 LINE 錯誤] {str(e)}")
+            print(f"[LINE 回覆] 成功")
+        except Exception as e:
+            print(f"[LINE 回覆錯誤] {type(e).__name__}: {str(e)}")
 
 @app.route("/", methods=["GET"])
 def health_check():
@@ -99,4 +121,5 @@ def health_check():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
+    print(f"[啟動] Flask 啟動在 port {port}")
     app.run(host="0.0.0.0", port=port)
