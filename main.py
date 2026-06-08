@@ -61,9 +61,11 @@ def callback():
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
     user_message = event.message.text
+    print(f"[收到訊息] {user_message}")
 
     # 呼叫 Claude API
     try:
+        print(f"[呼叫 Claude] 開始...")
         response = claude_client.messages.create(
             model="claude-sonnet-4-20250514",
             max_tokens=500,
@@ -71,18 +73,25 @@ def handle_message(event):
             messages=[{"role": "user", "content": user_message}]
         )
         reply_text = response.content[0].text
+        print(f"[Claude 回應] {reply_text}")
     except Exception as e:
+        print(f"[Claude 錯誤] {str(e)}")
         reply_text = "抱歉，系統暫時忙碌中，請稍後再試，或直接加入客服 LINE：https://lin.ee/OFTbf29 😊"
 
     # 回覆給用戶
-    with ApiClient(configuration) as api_client:
-        line_bot_api = MessagingApi(api_client)
-        line_bot_api.reply_message_with_http_info(
-            ReplyMessageRequest(
-                reply_token=event.reply_token,
-                messages=[TextMessage(text=reply_text)]
+    try:
+        print(f"[回覆 LINE] 開始...")
+        with ApiClient(configuration) as api_client:
+            line_bot_api = MessagingApi(api_client)
+            line_bot_api.reply_message_with_http_info(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(text=reply_text)]
+                )
             )
-        )
+        print(f"[回覆 LINE] 成功")
+    except Exception as e:
+        print(f"[回覆 LINE 錯誤] {str(e)}")
 
 @app.route("/", methods=["GET"])
 def health_check():
