@@ -24,7 +24,6 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 # 設定 Gemini API
 genai.configure(api_key=GEMINI_API_KEY)
-gemini_model = genai.GenerativeModel('gemini-pro')
 
 # === 讀取知識庫 ===
 def load_knowledge_base():
@@ -56,6 +55,12 @@ SYSTEM_PROMPT = f"""你是「奇異生技小幫手」，一個專業、親切的
 {KNOWLEDGE_BASE}
 """
 
+# 創建 Gemini 模型，設定 system instruction
+gemini_model = genai.GenerativeModel(
+    'gemini-pro',
+    system_instruction=SYSTEM_PROMPT
+)
+
 # === 處理 LINE Webhook ===
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -81,13 +86,7 @@ def handle_message(event):
     try:
         print(f"[Gemini] 開始呼叫...")
         response = gemini_model.generate_content(
-            contents=[
-                {
-                    "role": "user",
-                    "parts": [{"text": user_message}]
-                }
-            ],
-            system_instruction=SYSTEM_PROMPT,
+            user_message,
             generation_config=genai.types.GenerationConfig(
                 max_output_tokens=500,
                 temperature=0.7,
