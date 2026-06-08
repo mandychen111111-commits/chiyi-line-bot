@@ -55,9 +55,9 @@ SYSTEM_PROMPT = f"""你是「奇異生技小幫手」，一個專業、親切的
 {KNOWLEDGE_BASE}
 """
 
-# 創建 Gemini 模型，設定 system instruction
+# 創建 Gemini 模型（使用最新的 gemini-1.5-flash），設定 system instruction
 gemini_model = genai.GenerativeModel(
-    'gemini-pro',
+    'gemini-1.5-flash',
     system_instruction=SYSTEM_PROMPT
 )
 
