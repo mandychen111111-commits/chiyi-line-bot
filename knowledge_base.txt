@@ -1,0 +1,186 @@
+# 奇異生技 LINE Bot 知識庫
+# 版本：1.0 | 整理自行銷架構與影片資源
+
+## 【品牌基本資訊】
+Q: 奇異生技是什麼公司？
+A: 奇異生技股份有限公司（CHIYI BIO CO., LTD.）是一家專注於頭皮養護與肌膚健康的台灣生技公司，旗下品牌包含奇異生技、蓓薇媞（BwB）、CSKIN 等，致力於提供專業的髮肌調理解決方案。
+
+Q: 奇異生技的官方網站？聯絡方式？
+A: 官方網站：https://www.show-hair.com/
+蓓薇媞官網：https://bwb-life.com/
+奇門子官網：https://www.qimenzi.com/
+客服 LINE：https://lin.ee/OFTbf29（奇異生技客服中心）
+售後服務：https://lin.ee/GYbM3Ne
+奇異暢貨中心：https://lin.ee/O8Jxda3
+
+Q: 社群媒體在哪裡？
+A: Facebook：https://www.facebook.com/chiyi122
+YouTube：https://www.youtube.com/@chiyibio
+Instagram：https://www.instagram.com/chiyibio
+Google Map：https://goo.gl/maps/d5gi3cJcb9ocu3t67
+
+---
+
+## 【髮肌問題 × 調理流程】
+Q: 頭皮出油、油性頭皮怎麼辦？油垢、蟎蟲問題？
+A: 油性頭皮是因為皮脂腺過度分泌，需要從調節皮脂平衡著手。建議搭配奇異油性髮肌調理系列產品，並定期做頭皮深層清潔。
+📺 油性髮肌調理流程影片：https://youtu.be/XHwBMIcJKB0
+📺 油性/油垢/蟎蟲問題說明：https://youtu.be/TvU9DVyHnSo
+
+Q: 頭髮稀疏、髮量少、想豐盈怎麼辦？
+A: 豐盈髮質需要從髮根強化與頭皮環境改善雙管齊下，補充頭皮所需的養分與促進微循環。
+📺 豐盈髮肌調理流程影片：https://youtu.be/qzIyjYllna8
+
+Q: 頭髮脆弱、斷裂、容易打結？
+A: 脆弱髮質通常與過度染燙、蛋白質流失有關，需要補強角質蛋白與水分。
+📺 脆弱髮肌調理流程影片：https://youtu.be/o_WZqnjuabM
+
+Q: 頭皮乾燥、頭皮乾癢怎麼解決？
+A: 乾性頭皮需要補充水分與油脂平衡，避免過度清潔，適合溫和滋潤型養護方案。
+📺 乾性髮肌調理流程影片：https://youtu.be/TJKpiRZU1Ao
+
+Q: 頭皮失衡、時油時乾、頭皮敏感？
+A: 失衡性頭皮需要重建皮脂平衡機制，同步補水與控油。
+📺 失衡性髮肌調理流程影片：https://youtu.be/hm8xO_4dJao
+
+Q: 頭皮屑、乾屑、頭皮癢是什麼原因？
+A: 頭皮屑分為乾性（皮膚乾燥）和油性（馬拉色菌感染），需要對症處理。乾性脂漏也是常見問題。
+📺 頭皮屑/乾屑癢說明：https://youtu.be/2dIt-fSZr9s
+📺 乾性脂漏/滿天雪花：https://youtu.be/iTHRs0UwEk8
+
+Q: 掉髮、落髮嚴重怎麼辦？
+A: 掉髮原因多種，包括壓力、毛囊問題、頭皮環境不佳等，需要先了解根本原因。
+📺 萎縮髮/毛囊壞死原因：https://youtu.be/oQy8wqZWVrw
+📺 頭皮癰癬菌掉髮：https://youtu.be/P7zxQ_uF8RE
+📺 影響毛囊生長因素：https://youtu.be/By4y6HPm2qk
+📺 心理壓力與脫髮關係：https://youtu.be/116wZTw4Gjo
+📺 確診後出現脫髮如何應對：https://youtu.be/orLgn3k-6oQ
+
+Q: 頭皮有毛囊炎怎麼辦？
+A: 毛囊炎分細菌性與黴菌性，需正確判斷再處理，不當護理可能加重症狀。
+📺 毛囊炎是細菌還是黴菌？：https://youtu.be/Ge8ZWPnwxO8
+📺 API-11 毛囊炎操作技術：https://youtu.be/ig_d3MNFEiw
+
+Q: 頭皮有病毒疣怎麼辦？
+A: 頭皮病毒疣需要專業處理，不可自行摳除。
+📺 頭皮病毒疣知識：https://youtu.be/BNbSDpYsCHk
+📺 API-08 病毒疣操作技術：https://youtu.be/zfa3prBuCnc
+
+Q: 頭皮或臉部紅腫，是過敏還是蜂窩組織炎？
+A: 紅腫的原因不同，處理方式差異很大，需要先判斷再處理。
+📺 紅腫是過敏還是蜂窩組織炎：https://youtu.be/XUisVvMmiHw
+📺 API-10 操作技術：https://youtu.be/jMApVNOt8N0
+
+Q: 敏感肌膚怎麼保養？
+A: 敏感肌和過敏肌概念不同，需要區分後採取不同保養策略。
+📺 「敏感肌」vs「過敏肌」說明：https://youtu.be/tXe7t5aQBII
+📺 API-07 敏感肌操作技術：https://youtu.be/22nhz0TNRhw
+客服諮詢：https://lin.ee/trlqm7J（CSKIN 呵護肌膚活力）
+
+---
+
+## 【產品介紹】
+Q: SF 泡泡髮浴是什麼產品？
+A: SF 泡泡髮浴系列是奇異生技的明星洗護系列，透過豐富泡沫深層清潔頭皮，同時溫和不刺激。
+📺 SF 泡泡髮浴系列影片：https://www.youtube.com/playlist?list=PLLAx4N8H43Ew3O2j8gxMBmtDnZQ8ps2-Y
+
+Q: 胜肽系列是什麼？有哪些功效？
+A: 胜肽系列是以多種胜肽成分為核心的養護系列，針對頭皮與肌膚修護。
+📺 胜肽系列介紹影片：https://youtu.be/Tk4odjx5tO0
+📺 奇檬子三胜肽是什麼：https://youtu.be/wq3n_bIV6no
+📺 縮胺酸說明：https://youtu.be/uTsA8-a3rI0
+📺 胺基酸說明：https://youtu.be/AExMEtI-g9Y
+
+Q: 肌能煥膚精華是什麼產品？
+A: 肌能煥膚精華是針對肌膚煥新修護的精華產品。
+📺 肌能煥膚精華介紹：https://youtu.be/8RiflFsVWxE
+
+Q: 海洋元素CC霜？
+A: 海洋元素CC霜是結合護膚與遮瑕的多功能產品。
+📺 B01 海洋元素CC霜：https://youtu.be/zbh0T9JjBHI
+📺 海洋元素CC霜（另版）：https://youtu.be/e7drXCBkYtk
+
+Q: 七葉舒敏精華PLUS 是什麼？
+A: 七葉舒敏精華PLUS 針對敏感肌膚設計，舒緩紅腫與不適。
+📺 七葉舒敏精華PLUS 介紹：https://youtu.be/0qE_B8NC-LE
+
+Q: 修護奇肌凝膜？煥醒賦活面膜？循環面膜？
+A: 奇異生技有多款面膜產品，針對不同肌膚需求。
+📺 修護奇肌凝膜：https://youtu.be/wfImle7egyA
+📺 煥醒賦活面膜：https://youtu.be/sezG2yRd_TM
+📺 循環面膜：https://youtu.be/rldOog19D88
+
+Q: C Hair 健髮組是什麼？
+A: C Hair 健髮組是針對頭皮健康與髮質改善的組合套裝。
+📺 C Hair 健髮組介紹：https://youtu.be/0fZ8WGeDQok
+
+Q: 蘊活調理精華？
+A: 蘊活調理精華是頭皮調理系列核心產品之一。
+📺 蘊活調理精華：https://youtu.be/d50VxS_u_Os
+
+Q: 晶亮世界原食酵母益菌膠囊？無敵星星益菌膠囊？
+A: 奇異生技的益生菌保健系列，由內而外改善健康。
+📺 晶亮世界膠囊：https://youtu.be/45m6g6oCRsk / https://youtu.be/0h8Dh3HZQms
+📺 無敵星星膠囊：https://youtu.be/Csnic2ICxiY / https://youtu.be/7HDdhCijtWQ
+📺 腸眼軸與人體健康：https://youtu.be/oX_uLnh-VmI
+
+---
+
+## 【教育與健康知識】
+Q: 頭皮不健康有哪些警訊？
+A: 頭皮狀況是整體健康的指標，包括出油、掉屑、發癢、脫髮等都可能是警訊。
+📺 頭皮不健康的警訊：https://youtu.be/Ti6xv8Z7mnE
+📺 健康頭皮保健概念：https://youtu.be/YrvWQtxwdFA
+
+Q: 什麼激素可以促進頭髮生長？
+A: 多種激素影響毛髮生長，包括雌激素、甲狀腺素等。
+📺 促進長髮的激素：https://youtu.be/CLcQ94rb8LM
+
+Q: 什麼是淨化反應？
+A: 使用天然保健產品初期可能出現「好轉反應」，是身體排毒調整過程。
+📺 淨化反應-內臟排毒：https://youtu.be/cJGu_bLGO9E
+📺 淨化反應-腸眼軸：https://youtu.be/OhKPZzI1gi4
+📺 淨化反應-副作用說明：https://youtu.be/rnFabDWk55A
+
+Q: 光療對健康有什麼幫助？
+A: 光療可促進細胞修復、改善頭皮與皮膚狀況。
+📺 如何利用光療改善健康：https://youtu.be/7F11l47ctZE
+
+---
+
+## 【客服與購買】
+Q: 怎麼購買奇異生技的產品？在哪裡買？
+A: 可以透過以下管道購買：
+官方網站：https://www.show-hair.com/
+異享商城：https://lin.ee/62WA4EY（健康心世界）/ https://ecshopgo.com（官網商城）
+客服 LINE：https://lin.ee/OFTbf29（奇異生技客服中心）
+
+Q: 有什麼優惠活動？
+A: 可以加入「奇異活動情報站」第一手掌握最新活動：
+LINE 加入：https://lin.ee/CNjs4st
+2025活動頁：https://sites.google.com/view/2025dm/首頁
+2024活動頁：https://sites.google.com/view/cy2024dm/年中活動
+
+Q: 售後服務、產品使用問題怎麼處理？
+A: 售後服務請加入 LINE：https://lin.ee/GYbM3Ne
+蓓薇媞客服：https://lin.ee/azLvK3w
+輕食保健諮詢：https://lin.ee/9V47m6q
+
+Q: 顧客見證案例？使用心得？
+A: 可以到顧客見證分享群了解真實使用案例：
+LINE 加入：https://lin.ee/dW5ckCX
+
+---
+
+## 【教育訓練（B2B/業務夥伴）】
+Q: 我想了解加盟或成為奇異生技的合作夥伴、業務？
+A: 歡迎加入 HDMBA 教育訓練推廣中心，系統化學習品牌知識與業務技巧：
+LINE：https://lin.ee/ZDnGFFs
+蓓薇媞教育訓練中心：https://lin.ee/sZ6k8Vs
+HD訓練中心網站：https://hdmba5.com/
+
+Q: 業務夥伴可以去哪裡學習產品知識？
+A: 奇異提供完整的線上課程與教育資源：
+線上課程引導頁：https://reurl.cc/LNbmrX
+奇異教育平台(業務行銷) YouTube：https://www.youtube.com/channel/UCnpYvRSSrOcKQSVQjVmAxuQ
+奇異教育平台(線上課程) YouTube：https://www.youtube.com/channel/UCDXNNwNOx5Rla1-ROcD-z7A
