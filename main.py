@@ -1,6 +1,5 @@
 import os
-from google import genai
-from google.genai import types
+from groq import Groq
 from flask import Flask, request, abort
 from linebot.v3 import WebhookHandler
 from linebot.v3.exceptions import InvalidSignatureError
@@ -15,16 +14,16 @@ app = Flask(__name__)
 # === 設定區（從環境變數讀取）===
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")
 LINE_CHANNEL_SECRET = os.environ.get("LINE_CHANNEL_SECRET")
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
 print(f"[啟動] LINE Token: {LINE_CHANNEL_ACCESS_TOKEN[:20]}..." if LINE_CHANNEL_ACCESS_TOKEN else "[啟動] LINE Token: 未設定")
-print(f"[啟動] Gemini API Key: {GEMINI_API_KEY[:20]}..." if GEMINI_API_KEY else "[啟動] Gemini API Key: 未設定")
+print(f"[啟動] Groq API Key: {GROQ_API_KEY[:20]}..." if GROQ_API_KEY else "[啟動] Groq API Key: 未設定")
 
 configuration = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
-# 新版 Gemini API Client
-gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+# Groq Client
+groq_client = Groq(api_key=GROQ_API_KEY)
 
 # === 讀取知識庫 ===
 def load_knowledge_base():
@@ -39,7 +38,7 @@ def load_knowledge_base():
 KNOWLEDGE_BASE = load_knowledge_base()
 print(f"[啟動] 知識庫已載入，共 {len(KNOWLEDGE_BASE)} 字")
 
-# === System Prompt：定義 Bot 身份與行為 ===
+# === System Prompt ===
 SYSTEM_PROMPT = f"""你是「奇異生技小幫手」，一個專業、親切的 LINE 客服助理。
 
 你的工作是根據以下知識庫，回覆用戶關於奇異生技產品、頭皮養護知識、購買與服務的問題。
@@ -76,20 +75,20 @@ def handle_message(event):
 
     reply_text = None
     try:
-        print(f"[Gemini] 開始呼叫...")
-        response = gemini_client.models.generate_content(
-            model="gemini-2.0-flash",
-            config=types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
-                max_output_tokens=500,
-                temperature=0.7,
-            ),
-            contents=user_message,
+        print(f"[Groq] 開始呼叫...")
+        response = groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message}
+            ],
+            max_tokens=500,
+            temperature=0.7,
         )
-        reply_text = response.text
-        print(f"[Gemini] 成功回應: {reply_text[:100]}...")
+        reply_text = response.choices[0].message.content
+        print(f"[Groq] 成功回應: {reply_text[:100]}...")
     except Exception as e:
-        print(f"[Gemini 錯誤] {type(e).__name__}: {str(e)}")
+        print(f"[Groq 錯誤] {type(e).__name__}: {str(e)}")
         reply_text = "抱歉，系統暫時忙碌中，請稍後再試，或直接加入客服 LINE：https://lin.ee/OFTbf29 😊"
 
     if reply_text:
