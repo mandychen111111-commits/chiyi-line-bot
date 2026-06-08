@@ -1,0 +1,127 @@
+# 奇異生技 LINE Bot - Gemini API 版本
+## 部署步驟
+
+---
+
+## 一、準備 Gemini API Key（5 分鐘）
+
+1. 進入 Google AI Studio：https://aistudio.google.com
+2. 點「Get API Key」
+3. 選「Create API Key」→ 「Create new secret key in new project」
+4. 複製 API Key（稍後會用到）
+5. ⚠️ **保管好這個 Key，別放在程式碼裡**
+
+---
+
+## 二、GitHub 上傳更新
+
+### Step 1：上傳新的 main.py
+1. 進入你的 GitHub Repo
+2. 刪除舊的 `main.py`
+3. 上傳新的 `main_gemini.py`（就是我給你的）
+4. **重新命名** `main_gemini.py` → `main.py`（GitHub 上按 Rename）
+5. Commit
+
+### Step 2：確保 knowledge_base.txt 在 Repo
+1. 檢查是否已有 `knowledge_base.txt`
+2. 如果沒有，上傳整理好的那份
+
+### Step 3：上傳 requirements.txt（新增 Google 套件）
+建立 `requirements.txt`，內容如下：
+
+```
+Flask==2.3.3
+line-bot-sdk==3.6.0
+google-generativeai==0.7.2
+python-dotenv==1.0.0
+```
+
+然後上傳到 GitHub。
+
+---
+
+## 三、Render 上設定環境變數
+
+1. 進入 Render Dashboard → 選你的 Service
+2. 點「Environment」
+3. 新增 / 編輯以下環境變數：
+
+| 變數名 | 值 | 說明 |
+|-------|-----|------|
+| `LINE_CHANNEL_ACCESS_TOKEN` | （你的 LINE Token） | 保持不變 |
+| `LINE_CHANNEL_SECRET` | （你的 LINE Secret） | 保持不變 |
+| `GEMINI_API_KEY` | （從 Google AI Studio 複製） | ⭐ 新增這個 |
+
+4. 儲存（Save）
+5. Render 會自動重新部署
+
+---
+
+## 四、驗證部署成功
+
+### 檢查 Log
+1. Render Dashboard → 選你的 Service
+2. 點「Logs」查看最新日誌
+3. 看到以下內容代表成功：
+```
+[啟動] Gemini API Key: xxx...
+[啟動] 知識庫已載入，共 13787 字
+[啟動] Flask 啟動在 port 5000
+```
+
+### 測試 Bot
+在 LINE 上傳訊息給你的 Bot，應該會收到回覆。
+
+---
+
+## 五、常見問題排查
+
+### 問題 1：「Gemini API Key: 未設定」
+**原因**：Render 環境變數沒設好
+**解決**：
+1. 檢查 `GEMINI_API_KEY` 是否正確複製
+2. 確保沒有多餘空格
+3. 重新儲存 + 重新部署
+
+### 問題 2：「ModuleNotFoundError: No module named 'google'」
+**原因**：`requirements.txt` 沒上傳或沒有 `google-generativeai`
+**解決**：
+1. 確保 `requirements.txt` 有這一行：`google-generativeai==0.7.2`
+2. 推送到 GitHub
+3. Render 會自動重裝套件（等 1-2 分鐘）
+
+### 問題 3：API 超時 / 無回應
+**原因**：Gemini 伺服器暫時忙碌（很少見）
+**解決**：等 30 秒重試
+
+---
+
+## 六、效能對比
+
+### 原先（Groq）❌
+- TPM 額度：100,000（實際 6,000）
+- 你的知識庫：14,700 tokens → **爆掉**
+
+### 現在（Gemini） ✅
+- TPM 額度：250,000
+- 你的知識庫：14,700 tokens → 每分鐘 17 次對話
+- **完全免費，無信用卡必需**
+
+---
+
+## 七、下一步（可選）
+
+### 如果流量變大（>1,000 訊息/天）
+Gemini 免費層還是夠用，但如果要更多容量：
+- Gemini 付費：很便宜（按 token 計費）
+- Claude API：也是選項（如果預算充足）
+
+### 監控額度使用
+1. 進入 Google Cloud Console
+2. 查看「API Usage」
+3. 確保沒有超過 250K TPM
+
+---
+
+**所有改動已完成！**
+現在就可以部署了。有任何問題，檢查 Render 的 Log 就能找到原因。

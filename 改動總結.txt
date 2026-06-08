@@ -1,0 +1,94 @@
+# Groq → Gemini 改動總結
+
+---
+
+## 核心改動（main.py）
+
+### ❌ 刪除
+```python
+from groq import Groq
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+groq_client = Groq(api_key=GROQ_API_KEY)
+
+response = groq_client.chat.completions.create(
+    model="llama-3.1-8b-instant",
+    messages=[...],
+    max_tokens=500,
+    temperature=0.7,
+)
+```
+
+### ✅ 新增
+```python
+import google.generativeai as genai
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+genai.configure(api_key=GEMINI_API_KEY)
+gemini_model = genai.GenerativeModel('gemini-2.5-flash')
+
+response = gemini_model.generate_content(
+    contents=[SYSTEM_PROMPT, "\n用戶問題：", user_message],
+    generation_config=genai.types.GenerationConfig(
+        max_output_tokens=500,
+        temperature=0.7,
+    )
+)
+reply_text = response.text
+```
+
+---
+
+## 檔案列表
+
+### 需要上傳到 GitHub
+1. **main.py** ← 用 main_gemini.py 重新命名
+2. **knowledge_base.txt** ← 整理好的知識庫
+3. **requirements.txt** ← 新的依賴套件
+
+### 需要在 Render 設定
+環境變數：
+- `LINE_CHANNEL_ACCESS_TOKEN` （保持）
+- `LINE_CHANNEL_SECRET` （保持）
+- `GEMINI_API_KEY` ← **新增**
+
+---
+
+## 性能提升
+
+| 指標 | Groq | Gemini |
+|-----|------|--------|
+| TPM 額度 | 6,000 | 250,000 |
+| RPM 額度 | 無限制 | 15 |
+| RPD 額度 | 無限制 | 1,000 |
+| 費用 | 免費 | 免費 |
+| 知識庫容量 | ❌ 爆掉 | ✅ 綽綽有餘 |
+
+---
+
+## 風險評估
+
+### ⚠️ Gemini 的限制
+- RPM: 15 次/分鐘（每秒 0.25 次）
+- RPD: 1,000 次/天
+- 如果用戶同時傳 16+ 訊息/分鐘 → 會被限流
+
+### ✅ 對你的 Use Case
+- 典型客服 BOT：每分鐘 5-10 訊息
+- 完全沒問題
+
+### 萬一流量爆炸
+1. 可升級 Gemini 付費（很便宜，按 token 計）
+2. 或改用 Claude API
+
+---
+
+## 下一步行動
+
+1. ✅ 去 Google AI Studio 申請 GEMINI_API_KEY
+2. ✅ 上傳 3 個檔案到 GitHub
+3. ✅ 在 Render 環境變數新增 GEMINI_API_KEY
+4. ✅ 等待重新部署（1-2 分鐘）
+5. ✅ 在 LINE 測試
+
+---
+
+所有檔案已準備好，只需 5 分鐘部署完成！
