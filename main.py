@@ -1,5 +1,6 @@
 import os
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from flask import Flask, request, abort
 from linebot.v3 import WebhookHandler
 from linebot.v3.exceptions import InvalidSignatureError
@@ -22,8 +23,8 @@ print(f"[啟動] Gemini API Key: {GEMINI_API_KEY[:20]}..." if GEMINI_API_KEY els
 configuration = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
-# 設定 Gemini API
-genai.configure(api_key=GEMINI_API_KEY)
+# 新版 Gemini API Client
+gemini_client = genai.Client(api_key=GEMINI_API_KEY)
 
 # === 讀取知識庫 ===
 def load_knowledge_base():
@@ -55,24 +56,16 @@ SYSTEM_PROMPT = f"""你是「奇異生技小幫手」，一個專業、親切的
 {KNOWLEDGE_BASE}
 """
 
-# 創建 Gemini 模型（使用最新的 gemini-1.5-flash），設定 system instruction
-gemini_model = genai.GenerativeModel(
-    'gemini-1.5-flash',
-    system_instruction=SYSTEM_PROMPT
-)
-
 # === 處理 LINE Webhook ===
 @app.route("/callback", methods=["POST"])
 def callback():
     signature = request.headers.get("X-Line-Signature", "")
     body = request.get_data(as_text=True)
-
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         print("[錯誤] LINE 簽名驗證失敗")
         abort(400)
-
     return "OK"
 
 @handler.add(MessageEvent, message=TextMessageContent)
@@ -81,16 +74,17 @@ def handle_message(event):
     user_id = event.source.user_id
     print(f"[收到訊息] 使用者: {user_id}, 內容: {user_message}")
 
-    # 呼叫 Gemini API
     reply_text = None
     try:
         print(f"[Gemini] 開始呼叫...")
-        response = gemini_model.generate_content(
-            user_message,
-            generation_config=genai.types.GenerationConfig(
+        response = gemini_client.models.generate_content(
+            model="gemini-2.0-flash",
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
                 max_output_tokens=500,
                 temperature=0.7,
-            )
+            ),
+            contents=user_message,
         )
         reply_text = response.text
         print(f"[Gemini] 成功回應: {reply_text[:100]}...")
@@ -98,7 +92,6 @@ def handle_message(event):
         print(f"[Gemini 錯誤] {type(e).__name__}: {str(e)}")
         reply_text = "抱歉，系統暫時忙碌中，請稍後再試，或直接加入客服 LINE：https://lin.ee/OFTbf29 😊"
 
-    # 回覆給用戶
     if reply_text:
         try:
             print(f"[LINE 回覆] 開始回覆使用者...")
