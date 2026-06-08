@@ -1,6 +1,5 @@
 Flask==2.3.3
 line-bot-sdk==3.6.0
-google-generativeai==0.13.0
-google-auth-oauthlib==1.2.0
+google-generativeai==0.8.6
 python-dotenv==1.0.0
 gunicorn==21.2.0
